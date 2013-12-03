@@ -188,7 +188,9 @@ class WheelOfFortune {
         $maxMemberCount = $this->maxMemberCount;
         
         shuffle($indexedUsers);
-        array_splice($indexedUsers, 0, count($indexedUsers) - $maxMemberCount);
+        if (count($indexedUsers) >= $maxMemberCount) {
+            array_splice($indexedUsers, 0, count($indexedUsers) - $maxMemberCount);
+        }
         
         $newUserList = array();
         foreach ($indexedUsers as $userId) {
