@@ -65,6 +65,10 @@ class WheelOfFortune {
      */
     public function short_code_handler($attr) {
         
+        if ($attr["type"] == "winnerlink") {
+            return '<a target="_blank" id="WinnerLink"></a>';
+        }
+        
         $this->doInit($attr["name"]);
         
         $this->clearUserList();
@@ -231,7 +235,11 @@ class WheelOfFortune {
             if (!isset($catBuf[$active->post_id])) {
                 $category = get_the_category($active->post_id);
                 $catBuf[$active->post_id] = $category = $category[0];
+            } else {
+                $category = $catBuf[$active->post_id];
             }
+            
+            if (!isset($this->activedCategories[$category->cat_ID])) $this->activedCategories[$category->cat_ID] = array();
             if (!isset($this->activedCategories[$category->cat_ID]["members"])) $this->activedCategories[$category->cat_ID]["members"] = array();
             if (isset($category->cat_ID) && $category->cat_ID != "") {
                 $this->activedCategories[$category->cat_ID]["members"][] = $active->user_id;
